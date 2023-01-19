@@ -140,13 +140,21 @@ jobs:
         run: |
              dotnet build -c Release -p:Version=${{ steps.tag_version.outputs.new_version }} 
 
+      - name: Find Packages
+        id:  find
+        run: |
+           locn=$(find ${BASE_LOCN} -name "*.nupkg")
+           echo "Package is ${locn}"
+           echo "LOCATION=${locn}" >> $GITHUB_OUTPUT
+        env:
+           BASE_LOCN: ${{ inputs.APP_LOCN }}
+           
       - name: Upload Package for Publishing
         uses: actions/upload-artifact@v3
         with:
           name: PackedLib
           path: |
-              ${{ inputs.APP_LOCN }}/bin/x64/Release/*.nupkg
-              ${{ inputs.APP_LOCN }}/bin/Release/*.nupkg
+              ${{ steps.find.outputs.locn }}
 
   github-publish:
     needs: package
