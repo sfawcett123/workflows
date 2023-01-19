@@ -144,8 +144,10 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: PackedLib
-          path: ${{ inputs.APP_LOCN }}/bin/x64/Release/*.nupkg
-          
+          path: |
+              ${{ inputs.APP_LOCN }}/bin/x64/Release/*.nupkg
+              ${{ inputs.APP_LOCN }}/bin/Release/*.nupkg
+
   github-publish:
     needs: package
     name: Publish to Github
