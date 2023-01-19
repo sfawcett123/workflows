@@ -140,12 +140,14 @@ jobs:
         run: |
              dotnet build -c Release -p:Version=${{ steps.tag_version.outputs.new_version }} 
 
-      - name: Find Packages
+      - name: Find Package
         id:  find
         run: |
            locn=$(find ${BASE_LOCN} -name "*.nupkg")
-           echo "Package is ${locn}"
-           echo "LOCATION=${locn}" >> $GITHUB_OUTPUT
+           name=$(basename ${locn} )
+           mv ${locn} ${name}
+           echo "Package is ${name}"
+           echo "NAME=${name}" >> $GITHUB_OUTPUT
         env:
            BASE_LOCN: ${{ inputs.APP_LOCN }}
            
@@ -154,7 +156,7 @@ jobs:
         with:
           name: PackedLib
           path: |
-              ${{ steps.find.outputs.locn }}
+              ${{ steps.find.outputs.NAME }}
 
   github-publish:
     needs: package
