@@ -26,6 +26,7 @@ jobs:
       - run: npm run build
                
       - name: Release
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' 
         run: npx semantic-release
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
