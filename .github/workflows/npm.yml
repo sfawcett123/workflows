@@ -1,5 +1,4 @@
-
-name: NPM Publish
+name: Publish
 on:
    workflow_call:
       secrets:
