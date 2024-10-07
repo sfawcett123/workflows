@@ -77,7 +77,7 @@ jobs:
                 .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
                 
       - name: Upload Results for Publishing
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: TestResults
@@ -152,7 +152,7 @@ jobs:
            BASE_LOCN: ${{ inputs.APP_LOCN }}
            
       - name: Upload Package for Publishing
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: PackedLib
           path: |
